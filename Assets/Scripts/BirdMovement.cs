@@ -5,29 +5,42 @@ using UnityEngine.SceneManagement;
 
 public class BirdMovement : MonoBehaviour
 {
-    Vector3 init_pos;
-    private Transform transform_box;
-    private Rigidbody rb;
+
+    public CharacterController controller;
+
+    //movement stuff
+    public float speed = 5f;
+    public float turnSmoothTime = 0.1f;
+    float turnSmoothVelocity;
+
+    //perspective stuff
     bool perspective;
 
-    public float MovementSpeed = 10;
-    public float JumpForce = 5;
+    //Jump Stuff
+    public float gravity = 9.81f;
+    public float jumpSpeed = 3.5f;
+    private float dirY;
+    private bool canDoubleJump = false;
+    private float doubleJump = 0.5f;
+
+
+    //dash stuff
+    public Vector3 direction;
 
     private void Start()
     {
         perspective = true;
-        rb = GetComponent<Rigidbody>();
-        transform_box = GetComponent<Transform>();
-        init_pos = transform_box.position;
     }
 
-    void FixedUpdate()
+    void Update()
     {
+        //restart scene stuff
         if (Input.GetKeyDown(KeyCode.R))
         {
             RestartScene();
         }
 
+        //switch perspective
         if (Input.GetKeyDown(KeyCode.P))
         {
             perspective = !perspective;
@@ -35,43 +48,58 @@ public class BirdMovement : MonoBehaviour
 
         if (perspective)
         {
-            MoveLR();
-            MoveFB();
-            if (Input.GetKeyDown(KeyCode.Space) && Mathf.Abs(rb.velocity.y) < 0.001f)
+            //3d movement
+            float horizontal = Input.GetAxisRaw("Horizontal");
+            float vertical = Input.GetAxisRaw("Vertical");
+            direction = new Vector3(horizontal, 0f, vertical).normalized;
+
+            if (direction.magnitude >= 0.1f) 
             {
-                rb.AddForce(new Vector3(0, JumpForce, 0), ForceMode.Impulse);
+                float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
+                float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
+                transform.rotation = Quaternion.Euler(0f, angle, 0f);
+                controller.Move(direction * speed * Time.deltaTime);
             }
         }
         else
         {
-            var movement2D = Input.GetAxis("Horizontal");
-            transform.position += new Vector3(0, 0, movement2D) * Time.deltaTime * MovementSpeed;
-
-            if (Input.GetKeyDown(KeyCode.Space) && Mathf.Abs(rb.velocity.y) < 0.001f)
+            float horizontal = Input.GetAxisRaw("Horizontal");
+            direction = new Vector3(0f, 0f, horizontal).normalized;
+            if (direction.magnitude >= 0.1f) 
             {
-                rb.AddForce(new Vector3(0, JumpForce, 0), ForceMode.Impulse);
+                float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
+                float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
+                transform.rotation = Quaternion.Euler(0f, angle, 0f);
+                controller.Move(direction * speed * Time.deltaTime);
             }
         }
+
+        //jump stuff
+        if (controller.isGrounded) 
+        {
+            canDoubleJump = true;
+            if (Input.GetKeyDown(KeyCode.Space)) 
+            {
+                dirY = jumpSpeed;
+            }
+        }
+        else
+        {
+            if (Input.GetKeyDown(KeyCode.Space) && canDoubleJump) 
+            {
+                dirY = jumpSpeed * doubleJump;
+                canDoubleJump = false;
+            }
+        }
+
+        dirY -= gravity * Time.deltaTime;
+        direction.y = dirY;
+        controller.Move(direction * speed * Time.deltaTime);
     }
 
     public void RestartScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
-
-    void MoveLR()
-    {
-        Vector3 vec_l = Vector3.zero;
-        vec_l.x = Input.GetAxis("Horizontal");
-        Vector3 v = new Vector3(vec_l.x, 0.0f, 0.0f) * Time.deltaTime * MovementSpeed;
-        transform_box.Translate(v, Space.Self);
-    }
-
-    void MoveFB()
-    {
-        Vector3 vec_f = Vector3.zero;
-        vec_f.z = Input.GetAxis("Vertical");
-        Vector3 v = new Vector3(0.0f, 0.0f, vec_f.z) * Time.deltaTime * MovementSpeed;
-        transform_box.Translate(v, Space.Self);
-    }
 }
+

@@ -4,49 +4,35 @@ using UnityEngine;
 
 
 public class BirdDash : MonoBehaviour {
- 
-    public Vector3 moveDirection;
- 
-    public const float maxDashTime = 1.0f;
-    public float dashDistance = 10;
-    public float dashStoppingSpeed = 0.1f;
-    float currentDashTime = maxDashTime;
-    public float dashSpeed = 20;
-    private Rigidbody rb;
 
-    public GameObject dashEffect;
-    private ParticleSystem partSystem;
+    BirdMovement moveScript;
 
-    bool dash = false;
+    public float dashSpeed;
+    public float dashTime = 0.25f;
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody>();
-        partSystem = dashEffect.GetComponent<ParticleSystem>();
+        moveScript = GetComponent<BirdMovement>();
     }
 
     void Update () 
     {
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
-            currentDashTime = 0;  
-            dash = true; 
+            StartCoroutine(Dash());
         }
-        if(currentDashTime < maxDashTime)
+    }
+
+    IEnumerator Dash() 
+    {
+        float startTime = Time.time;
+
+        while (Time.time < startTime + dashTime) 
         {
-            moveDirection = transform.forward * dashDistance;
-            currentDashTime += dashStoppingSpeed;
-            if (dash) {
-                GameObject effect = Instantiate(dashEffect, transform.position, dashEffect.transform.rotation);
-                partSystem.Play();
-                var em = partSystem.emission; em.enabled = true;
-                dash = false;
-            }
+            moveScript.controller.Move(moveScript.direction * dashSpeed * Time.deltaTime);
+
+            yield return null;
         }
-        else
-        {
-            moveDirection = Vector3.zero;
-        }
-        rb.AddForce(moveDirection * Time.deltaTime * dashSpeed, ForceMode.Impulse);
+
     }
  }
