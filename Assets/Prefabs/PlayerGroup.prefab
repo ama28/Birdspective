@@ -300,6 +300,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 524464539611799802}
     m_Modifications:
+    - target: {fileID: 3902727588085355140, guid: 30781042e2b7bbf45b3d58aca77eee69, type: 3}
+      propertyPath: speed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3902727588085355140, guid: 30781042e2b7bbf45b3d58aca77eee69, type: 3}
+      propertyPath: jumpSpeed
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 3902727588085355141, guid: 30781042e2b7bbf45b3d58aca77eee69, type: 3}
       propertyPath: m_Name
       value: 'player '
@@ -355,6 +363,22 @@ PrefabInstance:
     - target: {fileID: 3902727588085355145, guid: 30781042e2b7bbf45b3d58aca77eee69, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3902727588085355147, guid: 30781042e2b7bbf45b3d58aca77eee69, type: 3}
+      propertyPath: m_Center.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3902727588085355147, guid: 30781042e2b7bbf45b3d58aca77eee69, type: 3}
+      propertyPath: m_Radius
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3902727588085355149, guid: 30781042e2b7bbf45b3d58aca77eee69, type: 3}
+      propertyPath: dashSpeed
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 3902727588085355149, guid: 30781042e2b7bbf45b3d58aca77eee69, type: 3}
+      propertyPath: dashTime
+      value: 0.1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 30781042e2b7bbf45b3d58aca77eee69, type: 3}
