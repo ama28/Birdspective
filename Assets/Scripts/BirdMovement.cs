@@ -7,6 +7,7 @@ public class BirdMovement : MonoBehaviour
 {
 
     public CharacterController controller;
+    public GameObject player;
 
     //movement stuff
     public float speed = 5f;
@@ -20,8 +21,9 @@ public class BirdMovement : MonoBehaviour
     public float gravity = 9.81f;
     public float jumpSpeed = 3.5f;
     private float dirY;
-    private bool canDoubleJump = false;
-    private float doubleJump = 0.5f;
+    //private bool canDoubleJump = false;
+    //private float doubleJump = 0.5f;
+    public bool isGrounded;
 
 
     //dash stuff
@@ -30,6 +32,7 @@ public class BirdMovement : MonoBehaviour
     private void Start()
     {
         perspective = true;
+        player = GameObject.FindWithTag("Player");
     }
 
     void Update()
@@ -75,21 +78,14 @@ public class BirdMovement : MonoBehaviour
         }
 
         //jump stuff
-        if (controller.isGrounded) 
+        if(controller.isGrounded) 
         {
-            canDoubleJump = true;
-            if (Input.GetKeyDown(KeyCode.Space)) 
-            {
-                dirY = jumpSpeed;
-            }
+            isGrounded = true;
         }
-        else
+        if (isGrounded && Input.GetKeyDown(KeyCode.Space))
         {
-            if (Input.GetKeyDown(KeyCode.Space) && canDoubleJump) 
-            {
-                dirY = jumpSpeed * doubleJump;
-                canDoubleJump = false;
-            }
+            dirY = jumpSpeed;
+            isGrounded = false;
         }
 
         dirY -= gravity * Time.deltaTime;
