@@ -8,7 +8,7 @@ public class BirdDash : MonoBehaviour {
     BirdMovement moveScript;
 
     public float dashSpeed;
-    public float dashTime = 0.25f;
+    public float dashTime;
 
     private void Start()
     {
