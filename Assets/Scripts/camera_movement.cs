@@ -5,7 +5,9 @@ using UnityEngine;
 public class camera_movement : MonoBehaviour
 {
     public GameObject player;
-    public Vector3 init; 
+    public Vector3 init;
+    public float distance = 4.0f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -15,7 +17,8 @@ public class camera_movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        init = new Vector3(transform.position.x, transform.position.y, player.transform.position.z);
-        transform.position = init;
+        if (gameObject.tag == "MainCamera")
+            transform.position = new Vector3(transform.position.x, transform.position.y, player.transform.position.z - distance);
+        else transform.position = new Vector3(transform.position.x, transform.position.y, player.transform.position.z);
     }
 }
