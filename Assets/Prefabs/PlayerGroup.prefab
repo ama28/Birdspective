@@ -302,11 +302,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3902727588085355140, guid: 30781042e2b7bbf45b3d58aca77eee69, type: 3}
       propertyPath: speed
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3902727588085355140, guid: 30781042e2b7bbf45b3d58aca77eee69, type: 3}
       propertyPath: jumpSpeed
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3902727588085355140, guid: 30781042e2b7bbf45b3d58aca77eee69, type: 3}
+      propertyPath: gravity
+      value: 9.81
+      objectReference: {fileID: 0}
+    - target: {fileID: 3902727588085355140, guid: 30781042e2b7bbf45b3d58aca77eee69, type: 3}
+      propertyPath: isGrounded
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3902727588085355141, guid: 30781042e2b7bbf45b3d58aca77eee69, type: 3}
       propertyPath: m_Name

@@ -66,13 +66,11 @@ public class BirdMovement : MonoBehaviour
         }
         else
         {
+            transform.rotation = Quaternion.Euler(0f, 0f, 0f);
             float horizontal = Input.GetAxisRaw("Horizontal");
             direction = new Vector3(0f, 0f, horizontal).normalized;
             if (direction.magnitude >= 0.1f) 
             {
-                float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
-                float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
-                transform.rotation = Quaternion.Euler(0f, angle, 0f);
                 controller.Move(direction * speed * Time.deltaTime);
             }
         }
