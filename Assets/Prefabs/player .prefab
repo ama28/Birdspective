@@ -4824,10 +4824,9 @@ GameObject:
   - component: {fileID: 3902727588085355142}
   - component: {fileID: 3902727588085355143}
   - component: {fileID: 3902727588085355144}
-  - component: {fileID: 3902727588085355147}
   - component: {fileID: 3902727588085355140}
   - component: {fileID: 3902727588085355146}
-  - component: {fileID: 3902727588085355149}
+  - component: {fileID: 7429080309311954981}
   m_Layer: 0
   m_Name: 'player '
   m_TagString: Player
@@ -4914,24 +4913,6 @@ MonoBehaviour:
   topDownCam: {fileID: 0}
   topAnimator: {fileID: 0}
   sideCam: {fileID: 0}
---- !u!143 &3902727588085355147
-CharacterController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3902727588085355141}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Height: 1
-  m_Radius: 1
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!114 &3902727588085355140
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4944,11 +4925,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb4c62e6debcd354bac1deb62d1a5de7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controller: {fileID: 3902727588085355147}
-  speed: 5
+  speed: 6
   turnSmoothTime: 0.1
-  gravity: 9.81
-  jumpSpeed: 3.5
+  JumpForce: 13
   direction: {x: 0, y: 0, z: 0}
 --- !u!65 &3902727588085355146
 BoxCollider:
@@ -4963,17 +4942,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3902727588085355149
-MonoBehaviour:
+--- !u!54 &7429080309311954981
+Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3902727588085355141}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba48fb2649ab24f8ba09803c41c6733f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dashSpeed: 10
-  dashTime: 0.25
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.08
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 80
+  m_CollisionDetection: 0

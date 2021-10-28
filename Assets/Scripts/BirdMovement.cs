@@ -6,11 +6,13 @@ using UnityEngine.SceneManagement;
 public class BirdMovement : MonoBehaviour
 {
 
-    public CharacterController controller;
-    public GameObject player;
+    //public CharacterController controller;
+    //public GameObject player;
+    private Rigidbody rb;
+    private Transform transform_box;
 
     //movement stuff
-    public float speed = 5f;
+    public float speed = 10f;
     public float turnSmoothTime = 0.1f;
     float turnSmoothVelocity;
 
@@ -18,12 +20,13 @@ public class BirdMovement : MonoBehaviour
     bool perspective;
 
     //Jump Stuff
-    public float gravity = 9.81f;
-    public float jumpSpeed = 3.5f;
-    private float dirY;
+    //public float gravity = 9.81f;
+    //public float jumpSpeed = 3.5f;
+    //private float dirY;
     //private bool canDoubleJump = false;
     //private float doubleJump = 0.5f;
-    public bool isGrounded;
+    //public bool isGrounded;
+    public float JumpForce = 5;
 
 
     //dash stuff
@@ -32,7 +35,9 @@ public class BirdMovement : MonoBehaviour
     private void Start()
     {
         perspective = true;
-        player = GameObject.FindWithTag("Player");
+        //player = GameObject.FindWithTag("Player");
+        rb = GetComponent<Rigidbody>();
+        transform_box = GetComponent<Transform>();
     }
 
     void Update()
@@ -52,45 +57,27 @@ public class BirdMovement : MonoBehaviour
         if (perspective)
         {
             //3d movement
-            float horizontal = Input.GetAxisRaw("Horizontal");
-            float vertical = Input.GetAxisRaw("Vertical");
-            direction = new Vector3(horizontal, 0f, vertical).normalized;
+            float horizontal = Input.GetAxis("Horizontal");
+            float vertical = Input.GetAxis("Vertical");
+            direction = new Vector3(horizontal, 0f, vertical);
 
-            if (direction.magnitude >= 0.1f) 
-            {
-                float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
-                float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
-                transform.rotation = Quaternion.Euler(0f, angle, 0f);
-                controller.Move(direction * speed * Time.deltaTime);
-            }
+            rb.MovePosition(transform.position + direction * speed * Time.deltaTime);
+            transform.LookAt(transform.position + direction);
         }
         else
         {
             transform.rotation = Quaternion.Euler(0f, 0f, 0f);
-            float horizontal = Input.GetAxisRaw("Horizontal");
+            float horizontal = Input.GetAxis("Horizontal");
             direction = new Vector3(0f, 0f, horizontal).normalized;
-            if (direction.magnitude >= 0.1f) 
-            {
-                controller.Move(direction * speed * Time.deltaTime);
-            }
+            rb.MovePosition(transform.position + direction * speed * Time.deltaTime);
         }
 
         //jump stuff
-        if(controller.isGrounded) 
+        if (Input.GetKeyDown(KeyCode.Space) && Mathf.Abs(rb.velocity.y) < 0.001f)
         {
-            isGrounded = true;
+            rb.AddForce(new Vector3(0f, JumpForce, 0f), ForceMode.Impulse);
         }
-        if (isGrounded && Input.GetKeyDown(KeyCode.Space))
-        {
-            dirY = jumpSpeed;
-            isGrounded = false;
-        }
-
-        dirY -= gravity * Time.deltaTime;
-        direction.y = dirY;
-        controller.Move(direction * speed * Time.deltaTime);
     }
-
     public void RestartScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
