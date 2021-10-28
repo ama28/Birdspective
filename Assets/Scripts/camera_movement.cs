@@ -18,7 +18,7 @@ public class camera_movement : MonoBehaviour
     void Update()
     {
         if (gameObject.tag == "MainCamera")
-            transform.position = new Vector3(transform.position.x, transform.position.y, player.transform.position.z - distance);
-        else transform.position = new Vector3(transform.position.x, transform.position.y, player.transform.position.z);
+            transform.position = new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z - distance);
+        else transform.position = new Vector3(transform.position.x, player.transform.position.y, player.transform.position.z);
     }
 }

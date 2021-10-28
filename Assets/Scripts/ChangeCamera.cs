@@ -57,6 +57,6 @@ public class ChangeCamera : MonoBehaviour
         yield return new WaitForSeconds(1f);
         topDownCam.enabled = false;
         sideCam.enabled = true;
-        birdCollider.size = new Vector3(100.0f, 1.0f, 1.0f);
+        birdCollider.size = new Vector3(999.0f, 1.0f, 1.0f);
     }
 }
