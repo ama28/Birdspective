@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4996622922583942}
   - component: {fileID: 33618589927641874}
   - component: {fileID: 23049787837567990}
-  - component: {fileID: -9024261472798083136}
+  - component: {fileID: -1466481917217691338}
   m_Layer: 0
   m_Name: ForestTreePineTall2
   m_TagString: Untagged
@@ -82,16 +82,17 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &-9024261472798083136
-BoxCollider:
+--- !u!64 &-1466481917217691338
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1755297518104830}
-  m_Material: {fileID: 13400000, guid: c4f6be1bdbb594732980f43c36e59737, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.7660868, y: 3.000051, z: 1.8569734}
-  m_Center: {x: 0, y: 0.44550627, z: -0.00000008940697}
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: 6819aaac952b96048b10875168436abb, type: 3}

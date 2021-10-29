@@ -27,6 +27,7 @@ public class BirdMovement : MonoBehaviour
     //private float doubleJump = 0.5f;
     //public bool isGrounded;
     public float JumpForce = 5;
+    public float perspectiveJF = 500;
 
 
     //dash stuff
@@ -52,6 +53,10 @@ public class BirdMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.P))
         {
             perspective = !perspective;
+            //if (Mathf.Abs(rb.velocity.y) < 0.001f)
+            //{
+            //    rb.AddForce(new Vector3(0f, perspectiveJF, 0f), ForceMode.Impulse);
+            //}
         }
 
         if (perspective)
@@ -69,7 +74,7 @@ public class BirdMovement : MonoBehaviour
             transform.rotation = Quaternion.Euler(0f, 0f, 0f);
             float horizontal = Input.GetAxis("Horizontal");
             direction = new Vector3(0f, 0f, horizontal).normalized;
-            rb.MovePosition(transform.position + direction * speed * Time.deltaTime);
+            rb.MovePosition(transform.position + direction * (speed * 2) * Time.deltaTime);
         }
 
         //jump stuff
@@ -78,6 +83,7 @@ public class BirdMovement : MonoBehaviour
             rb.AddForce(new Vector3(0f, JumpForce, 0f), ForceMode.Impulse);
         }
     }
+
     public void RestartScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
