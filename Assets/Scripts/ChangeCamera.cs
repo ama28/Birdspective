@@ -5,7 +5,9 @@ using UnityEngine;
 public class ChangeCamera : MonoBehaviour
 {
     public Camera topDownCam;
+    public Canvas whiteFade;
     public Animator topAnimator;
+    public Animator fadeAnimator;
 
     public Camera sideCam;
 
@@ -19,6 +21,7 @@ public class ChangeCamera : MonoBehaviour
         sideCam.enabled = false;
 
         topAnimator = topDownCam.GetComponent<Animator>();
+        fadeAnimator = whiteFade.GetComponent<Animator>();
 
         birdCollider = gameObject.GetComponent<BoxCollider>();
     }
@@ -32,7 +35,8 @@ public class ChangeCamera : MonoBehaviour
             if (topDownCam.enabled)
             {
                 topAnimator.CrossFadeInFixedTime("ShiftToSide", 0);
-
+                StartCoroutine(WaitAndFade());
+            
                 // wait a second and switch to side camera
                 StartCoroutine(WaitAndSwitch());
             }
@@ -58,5 +62,11 @@ public class ChangeCamera : MonoBehaviour
         topDownCam.enabled = false;
         sideCam.enabled = true;
         birdCollider.size = new Vector3(999.0f, 1.0f, 1.0f);
+    }
+
+    IEnumerator WaitAndFade()
+    {
+        yield return new WaitForSeconds(0.5f);
+        fadeAnimator.CrossFadeInFixedTime("WhiteFadeIn&Out", 0);
     }
 }

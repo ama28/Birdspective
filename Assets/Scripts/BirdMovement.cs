@@ -26,12 +26,15 @@ public class BirdMovement : MonoBehaviour
     //private bool canDoubleJump = false;
     //private float doubleJump = 0.5f;
     //public bool isGrounded;
-    public float JumpForce = 5;
+    public float JumpForce = 5.0f;
     public float perspectiveJF = 500;
 
 
     //dash stuff
     public Vector3 direction;
+
+    //heights time
+    public float peak = 30;
 
     private void Start()
     {
@@ -49,32 +52,19 @@ public class BirdMovement : MonoBehaviour
             RestartScene();
         }
 
+        if (transform.position.y < -5)
+        {
+           RestartScene(); 
+        }
+
         //switch perspective
         if (Input.GetKeyDown(KeyCode.P))
         {
             perspective = !perspective;
-            //if (Mathf.Abs(rb.velocity.y) < 0.001f)
-            //{
-            //    rb.AddForce(new Vector3(0f, perspectiveJF, 0f), ForceMode.Impulse);
-            //}
-        }
-
-        if (perspective)
-        {
-            //3d movement
-            float horizontal = Input.GetAxis("Horizontal");
-            float vertical = Input.GetAxis("Vertical");
-            direction = new Vector3(horizontal, 0f, vertical);
-
-            rb.MovePosition(transform.position + direction * speed * Time.deltaTime);
-            transform.LookAt(transform.position + direction);
-        }
-        else
-        {
-            transform.rotation = Quaternion.Euler(0f, 0f, 0f);
-            float horizontal = Input.GetAxis("Horizontal");
-            direction = new Vector3(0f, 0f, horizontal).normalized;
-            rb.MovePosition(transform.position + direction * (speed * 2) * Time.deltaTime);
+            if(!perspective) 
+            {
+                StartCoroutine(WaitASecond());
+            }
         }
 
         //jump stuff
@@ -84,9 +74,51 @@ public class BirdMovement : MonoBehaviour
         }
     }
 
+    void FixedUpdate() 
+    {
+        if (perspective)
+        {
+
+            //3d movement
+            float horizontal = Input.GetAxis("Horizontal");
+            float vertical = Input.GetAxis("Vertical");
+            direction = new Vector3(horizontal, 0f, vertical).normalized;
+
+            if (direction == Vector3.zero)
+            {
+                return;
+            }
+
+            Quaternion rotate = Quaternion.LookRotation(direction);
+            rotate = Quaternion.RotateTowards(
+                transform.rotation,
+                rotate,
+                360 * Time.deltaTime
+            );
+
+            rb.MovePosition(transform.position + direction * speed * Time.deltaTime);
+            rb.MoveRotation(rotate);
+            //transform.LookAt(transform.position + direction);
+        }
+        else
+        {
+            transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+            float horizontal = Input.GetAxis("Horizontal");
+            direction = new Vector3(0f, 0f, horizontal).normalized;
+            rb.MovePosition(transform.position + direction * speed * Time.deltaTime);
+        }
+    }
+
     public void RestartScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    IEnumerator WaitASecond()
+    {
+        yield return new WaitForSeconds(0.7f);
+        transform_box.position = new Vector3(transform.position.x, peak, transform.position.z);
+        rb.AddForce(new Vector3(0f, -3.0f*JumpForce, 0f), ForceMode.Impulse);
     }
 }
 

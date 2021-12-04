@@ -320,6 +320,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6892207279077051, guid: 9128427f87a28f64abdd5519cfd08b00, type: 3}
+      propertyPath: m_Interpolate
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6892207279077051, guid: 9128427f87a28f64abdd5519cfd08b00, type: 3}
+      propertyPath: m_AngularDrag
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 524464539611799802, guid: 9128427f87a28f64abdd5519cfd08b00, type: 3}
       propertyPath: m_LocalPosition.x
       value: 7.00451
