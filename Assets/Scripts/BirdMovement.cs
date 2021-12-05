@@ -36,8 +36,11 @@ public class BirdMovement : MonoBehaviour
     //heights time
     public float peak = 30;
 
+    bool faceFront; 
+
     private void Start()
     {
+        faceFront = true; 
         perspective = true;
         //player = GameObject.FindWithTag("Player");
         rb = GetComponent<Rigidbody>();
@@ -102,9 +105,17 @@ public class BirdMovement : MonoBehaviour
         }
         else
         {
-            transform.rotation = Quaternion.Euler(0f, 0f, 0f);
             float horizontal = Input.GetAxis("Horizontal");
             direction = new Vector3(0f, 0f, horizontal).normalized;
+            //transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+            if (faceFront && horizontal < 0) {
+                faceFront  = !faceFront;
+                transform.Rotate(0f, 180f, 0f);
+            }
+            if (!faceFront && horizontal > 0) {
+                faceFront  = !faceFront;
+                transform.Rotate(0f, 180f, 0f);
+            }
             rb.MovePosition(transform.position + direction * speed * Time.deltaTime);
         }
     }
