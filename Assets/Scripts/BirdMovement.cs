@@ -66,6 +66,7 @@ public class BirdMovement : MonoBehaviour
             perspective = !perspective;
             if(!perspective) 
             {
+                transform.rotation = Quaternion.Euler(0f, 0f, 0f);
                 StartCoroutine(WaitASecond());
             }
         }
@@ -107,7 +108,7 @@ public class BirdMovement : MonoBehaviour
         {
             float horizontal = Input.GetAxis("Horizontal");
             direction = new Vector3(0f, 0f, horizontal).normalized;
-            //transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+            transform.Rotate(0f, 0f, 0f);
             if (faceFront && horizontal < 0) {
                 faceFront  = !faceFront;
                 transform.Rotate(0f, 180f, 0f);
