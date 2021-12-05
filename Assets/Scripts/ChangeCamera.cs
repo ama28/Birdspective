@@ -66,7 +66,7 @@ public class ChangeCamera : MonoBehaviour
 
     IEnumerator WaitAndFade()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.1f);
         fadeAnimator.CrossFadeInFixedTime("WhiteFadeIn&Out", 0);
     }
 }

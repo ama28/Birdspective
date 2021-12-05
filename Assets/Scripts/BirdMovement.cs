@@ -118,7 +118,7 @@ public class BirdMovement : MonoBehaviour
     {
         yield return new WaitForSeconds(0.7f);
         transform_box.position = new Vector3(transform.position.x, peak, transform.position.z);
-        rb.AddForce(new Vector3(0f, -3.0f*JumpForce, 0f), ForceMode.Impulse);
+        rb.AddForce(new Vector3(0f, -2.0f*JumpForce, 0f), ForceMode.Impulse);
     }
 }
 
